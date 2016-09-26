@@ -1,27 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>Mustache PHP example</title>
-  </head>
+<?php
+  require_once('Mustache/Autoloader.php');
+  Mustache_Autoloader::register();
+  $mustache = new Mustache_Engine(array(
+     'loader' => new Mustache_Loader_FilesystemLoader(dirname(__FILE__).'/templates')
+  ));
 
-  <body>
-      This is a Mustache PHP example<br>
-      <?php
+  $template = $mustache->loadTemplate('welcome');
 
-        // These lines will autoload Mustache.
-        require_once('Mustache/Autoloader.php');
-        Mustache_Autoloader::register();
-
-        // Create instance of mustache engine
-        $mustache = new Mustache_Engine;
-
-        // Mustache engine takes 2 params:
-        //  1) template
-        //  2) array of data
-        echo $mustache->render('Hello, {{firstname}}!',
-                                array('firstname' => 'Jeff'));
-      ?>
-  </body>
-
-</html>
+  echo $template->render(array('firstname' => 'Babadook', 'visitorNumber' => '100000'));
+?>
